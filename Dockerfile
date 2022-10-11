@@ -20,8 +20,8 @@ COPY --from=build /runtime/ /
 COPY --from=build /app/src/server /app/bin/
 
 # Include files in the /public directory to enable static asset handling
-COPY --from=build /app/public/ /public
+# COPY --from=build /app/public/ /public
 
 # Start server.
-EXPOSE 8080
+# EXPOSE 8080
 CMD ["/app/bin/server"]
