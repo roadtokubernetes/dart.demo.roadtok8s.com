@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dart-demos-roadtok8s-com-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dart-demos-roadtok8s-com-deployment
+  template:
+    metadata:
+      labels:
+        app: dart-demos-roadtok8s-com-deployment
+    spec:
+      containers:
+        - name: dart-demos-roadtok8s-com-container
+          image: roadtokubernetes/dart.demo.roadtok8s.com:latest
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "3001"
+          ports:
+            - name: dart-demo-port
+              containerPort: 3001
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: dart-demo-port
+            failureThreshold: 1
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: dart-demo-port
+            failureThreshold: 30
+            periodSeconds: 10
+
